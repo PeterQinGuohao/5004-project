@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Model.ToDoTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2022-05-12T00:55:46" hostname="LAPTOP-R76N3JQM" time="0.009">
+  <properties/>
+  <testcase name="getDue()" classname="Model.ToDoTest" time="0.0"/>
+  <testcase name="isCompleted()" classname="Model.ToDoTest" time="0.0"/>
+  <testcase name="getText()" classname="Model.ToDoTest" time="0.0"/>
+  <testcase name="getID()" classname="Model.ToDoTest" time="0.0"/>
+  <testcase name="setId()" classname="Model.ToDoTest" time="0.001"/>
+  <testcase name="setCompleted()" classname="Model.ToDoTest" time="0.0"/>
+  <testcase name="getPriority()" classname="Model.ToDoTest" time="0.001"/>
+  <testcase name="testEquals()" classname="Model.ToDoTest" time="0.002"/>
+  <testcase name="getCategory()" classname="Model.ToDoTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ToDo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW9</a> &gt; <a href="index.source.html" class="el_package">Model</a> &gt; <span class="el_source">ToDo.java</span></div><h1>ToDo.java</h1><pre class="source lang-java linenums">package Model;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * This class is the data structure of todo
+ */
+public class ToDo {
+    private Map&lt;String, String&gt; parameters;
+    private Builder builder;
+    private String text;
+    private Boolean completed;
+    private LocalDate due;
+    private Integer priority;
+    private String category;
+    private Integer id;
+    public static final String TODO_TEXT = &quot;--todo-text&quot;;
+    public static final String COMPLETED = &quot;--completed&quot;;
+    public static final String DUE = &quot;--due&quot;;
+    public static final String PRIORITY = &quot;--priority&quot;;
+    public static final String CATEGORY = &quot;--category&quot;;
+<span class="fc" id="L26">    public static final Integer TWO = 2;</span>
+<span class="fc" id="L27">    public static final Integer SEVEN = 7;</span>
+
+    /**
+     * The constructor of ToDo class.
+     * @param builder - the builder class.
+     * @param parameters - hashMap, contains the information about a ToDo.
+     */
+<span class="fc" id="L34">    public ToDo(Builder builder, Map&lt;String, String&gt; parameters){</span>
+<span class="fc" id="L35">        this.text = builder.text;</span>
+<span class="fc" id="L36">        this.completed =  builder.completed;</span>
+<span class="fc" id="L37">        this.due = builder.due;</span>
+<span class="fc" id="L38">        this.priority = builder.priority;</span>
+<span class="fc" id="L39">        this.category = builder.category;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * The method to set the ID.
+     * @param id : an int, representing the id of a todo
+     */
+    public void setId(Integer id) {
+<span class="fc" id="L47">        this.id = id;</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * The method to set the completed to be true.
+     */
+    public void setCompleted() {
+<span class="fc" id="L54">        this.completed = true;</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Getter for the ID.
+     * @return integer, representing the id.
+     */
+    public Integer getID() {
+<span class="fc" id="L62">        return this.id;</span>
+    }
+
+    /**
+     * A method to get the situation of completion.
+     * @return boolean, indicating the situation of completion.
+     */
+    public boolean isCompleted() {
+<span class="fc" id="L70">        return this.completed;</span>
+    }
+
+    /**
+     * Getter of the Text
+     * @return string, indicating the Text
+     */
+    public String getText() {
+<span class="fc" id="L78">        return this.text;</span>
+    }
+
+    /**
+     * Getter of the due
+     * @return loca, date, indicating the due
+     */
+    public LocalDate getDue() {
+<span class="fc" id="L86">        return this.due;</span>
+    }
+
+    /**
+     * Getter of the priority
+     * @return integer, indicating the priority
+     */
+    public Integer getPriority() {
+<span class="fc" id="L94">        return this.priority;</span>
+    }
+
+    /**
+     * Getter of the category
+     * @return string, indicating the category
+     */
+    public String getCategory() {
+<span class="fc" id="L102">        return this.category;</span>
+    }
+
+
+    public Boolean getCompleted() {
+<span class="fc" id="L107">        return completed;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (this == o) {</span>
+<span class="fc" id="L113">            return true;</span>
+        }
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">        if (o == null || this.getClass() != o.getClass()) {</span>
+<span class="fc" id="L116">            return false;</span>
+        }
+<span class="fc" id="L118">        ToDo toDo = (ToDo) o;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        return Objects.equals(this.getText(), toDo.getText()) &amp;&amp; Objects</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">                .equals(this.isCompleted(), toDo.isCompleted()) &amp;&amp; Objects</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">                .equals(this.getDue(), toDo.getDue()) &amp;&amp; Objects</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">                .equals(this.getPriority(), toDo.getPriority()) &amp;&amp; Objects</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">                .equals(this.getCategory(), toDo.getCategory());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L128">        return Objects.hash(this.getText(), this.isCompleted(), this.getDue(), this.getPriority(),</span>
+<span class="fc" id="L129">                this.getCategory());</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L134">        return &quot;ToDo{&quot; +</span>
+                &quot;id=&quot; + this.id +
+                &quot;, text='&quot; + this.text + '\'' +
+                &quot;, completed=&quot; + this.completed +
+                &quot;, due=&quot; + this.due +
+                &quot;, priority=&quot; + this.priority +
+                &quot;, category='&quot; + this.category + '\'' +
+                '}';
+    }
+
+    /**
+     * A class of Builder.
+     */
+    public static class Builder{
+        private Map&lt;String, String&gt; parameters;
+        private String text;
+        private Boolean completed;
+        private LocalDate due;
+        private Integer priority;
+        private String category;
+
+        /**
+         * The constructor of the Builder class.
+         * @param parameters the input hashMap contains the information about a ToDo.
+         */
+<span class="fc" id="L159">        public Builder(Map&lt;String, String&gt; parameters){</span>
+<span class="fc" id="L160">            this.parameters = parameters;</span>
+<span class="fc" id="L161">            this.text=parameters.get(TODO_TEXT.substring(SEVEN));</span>
+<span class="fc" id="L162">            this.completed =false;   //Defaulted</span>
+
+<span class="fc" id="L164">            completed(parameters);</span>
+<span class="fc" id="L165">            due(parameters);</span>
+<span class="fc" id="L166">            priority(parameters);</span>
+<span class="fc" id="L167">            category(parameters);</span>
+<span class="fc" id="L168">            Build();</span>
+<span class="fc" id="L169">        }</span>
+
+        /**
+         * A method to get the completed status from input hashMap
+         * @param parameters input hashMap
+         * @return a Builder
+         */
+        public  Builder completed(Map&lt;String, String&gt; parameters){
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (parameters.containsKey(COMPLETED.substring(TWO))</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">                    &amp;&amp; parameters.get(COMPLETED.substring(TWO)) != null)</span>
+<span class="fc" id="L179">                this.completed = Boolean.parseBoolean(parameters.get(COMPLETED.substring(TWO)));</span>
+            else{
+<span class="fc" id="L181">                this.completed = false;}</span>
+<span class="fc" id="L182">            return this;</span>
+        }
+        /**
+         * A method to get the due date from input hashMap
+         * @param parameters a input hashMap
+         * @return a Builder
+         */
+        public  Builder due(Map&lt;String, String&gt; parameters){
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            if (parameters.containsKey(DUE.substring(TWO)) &amp;&amp;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">                    parameters.get(DUE.substring(TWO)) != null) {</span>
+<span class="fc" id="L192">                String input = parameters.get(DUE.substring(TWO));</span>
+<span class="fc" id="L193">                DateTimeFormatter pattern1 = DateTimeFormatter.ofPattern(&quot;MM/dd/yyyy&quot;);</span>
+<span class="fc" id="L194">                DateTimeFormatter pattern2 = DateTimeFormatter.ofPattern(&quot;M/dd/yyyy&quot;);</span>
+<span class="fc" id="L195">                DateTimeFormatter pattern3 = DateTimeFormatter.ofPattern(&quot;MM/d/yyyy&quot;);</span>
+                try {
+<span class="fc" id="L197">                    LocalDate ld = LocalDate.parse(input, pattern1);</span>
+<span class="fc" id="L198">                    this.due = ld;</span>
+<span class="nc" id="L199">                } catch (DateTimeParseException exp) {</span>
+<span class="nc" id="L200">                    System.err.println(&quot;Failed to parse input using first pattern&quot;);</span>
+                    try {
+<span class="nc" id="L202">                        LocalDate ld = LocalDate.parse(input, pattern2);</span>
+<span class="nc" id="L203">                        this.due = ld;</span>
+<span class="nc" id="L204">                    } catch (DateTimeParseException exp2) {</span>
+<span class="nc" id="L205">                        System.err.println(&quot;Failed to parse input using second pattern&quot;);</span>
+<span class="nc" id="L206">                    }</span>
+                    try {
+<span class="nc" id="L208">                        LocalDate ld = LocalDate.parse(input, pattern3);</span>
+<span class="nc" id="L209">                        this.due = ld;</span>
+<span class="nc" id="L210">                    } catch (DateTimeParseException exp3) {</span>
+<span class="nc" id="L211">                        System.err.println(&quot;Failed to parse input using third pattern&quot;);</span>
+<span class="nc" id="L212">                    }</span>
+<span class="fc" id="L213">                }</span>
+<span class="fc" id="L214">            }else{</span>
+<span class="fc" id="L215">                this.due = null;}</span>
+<span class="fc" id="L216">            return this;</span>
+        }
+
+        /**
+         * A method to get the priority from input hashMap
+         * @param parameters a input hashMap
+         * @return a Builder
+         */
+        public Builder priority( Map&lt;String, String&gt; parameters){
+<span class="fc" id="L225">            final Integer DEFAULT_PRIORITY = 3;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">            if (parameters.containsKey(PRIORITY.substring(TWO)) &amp;&amp;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">                    parameters.get(PRIORITY.substring(TWO)) != null) {</span>
+<span class="fc" id="L228">                this.priority = Integer.parseInt(parameters.get(PRIORITY.substring(TWO)));</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            } else if ( parameters.get(PRIORITY.substring(TWO)) == null){</span>
+<span class="fc" id="L230">                this.priority = null;</span>
+            }
+            else{
+<span class="nc" id="L233">                this.priority = DEFAULT_PRIORITY;</span>
+            }
+<span class="fc" id="L235">            return this;</span>
+        }
+        /**
+         * A method to get the category from input hashMap
+         * @param parameters a input hashMap
+         * @return a Builder
+         */
+        public  Builder category(Map&lt;String, String&gt; parameters){
+<span class="fc bfc" id="L243" title="All 2 branches covered.">            if (parameters.containsKey(CATEGORY.substring(TWO))) {</span>
+<span class="fc" id="L244">                this.category = parameters.get(CATEGORY.substring(TWO));</span>
+            }else{
+<span class="fc" id="L246">                this.category = null;}</span>
+<span class="fc" id="L247">            return this;</span>
+        }
+        /**
+         * A method to generate a ToDo in the Builder class.
+         * @return a ToDo .
+         */
+        public ToDo Build(){
+<span class="fc" id="L254">            return new ToDo(this, this.parameters);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

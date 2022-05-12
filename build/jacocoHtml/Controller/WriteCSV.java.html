@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WriteCSV.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW9</a> &gt; <a href="index.source.html" class="el_package">Controller</a> &gt; <span class="el_source">WriteCSV.java</span></div><h1>WriteCSV.java</h1><pre class="source lang-java linenums">package Controller;
+
+import java.io.FileOutputStream;
+
+import Model.*;
+
+public class WriteCSV {
+
+  /**
+   * Construct a WriteCSV object
+   */
+<span class="fc" id="L12">  public WriteCSV() {</span>
+<span class="fc" id="L13">  }</span>
+
+  /**
+   * Write a new CSV file with given information
+   * @param filePath the path of new CSV file
+   * @param toDoList the list that contains information
+   */
+  public void WriteToCSV(String filePath, ToDoList toDoList) {
+<span class="fc" id="L21">    StringBuilder inputBuffer = new StringBuilder();</span>
+<span class="fc" id="L22">    final String header = &quot;\&quot;id\&quot;,\&quot;text\&quot;,\&quot;completed\&quot;,\&quot;due\&quot;,\&quot;priority\&quot;,\&quot;category\&quot;\n&quot;;</span>
+<span class="fc" id="L23">    inputBuffer.append(header);</span>
+    String line;
+<span class="fc bfc" id="L25" title="All 2 branches covered.">    for (ToDo toDo : toDoList.getToDoList()) {</span>
+<span class="fc" id="L26">      line = String.format(</span>
+          &quot;\&quot;%d\&quot;,\&quot;%s\&quot;,\&quot;%b\&quot;,\&quot;%s\&quot;,\&quot;%s\&quot;,\&quot;%s\&quot;&quot;,
+<span class="fc" id="L28">          toDo.getID(),</span>
+<span class="fc" id="L29">          toDo.getText(),</span>
+<span class="fc" id="L30">          toDo.getCompleted(),</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">          toDo.getDue() == null ? &quot;?&quot; : toDo.getDue(),</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">          toDo.getPriority() == null ? &quot;?&quot; : Integer.toString(toDo.getPriority()),</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">          toDo.getCategory() == null ? &quot;?&quot; : toDo.getCategory());</span>
+<span class="fc" id="L34">      inputBuffer.append(line).append(System.lineSeparator());</span>
+
+<span class="fc" id="L36">    }</span>
+    try {
+<span class="fc" id="L38">      FileOutputStream fileOut = new FileOutputStream(filePath);</span>
+<span class="fc" id="L39">      fileOut.write(inputBuffer.toString().getBytes());</span>
+<span class="fc" id="L40">      fileOut.close();</span>
+<span class="nc" id="L41">    } catch (Exception e) {</span>
+<span class="nc" id="L42">      System.out.println(&quot;Failed to write result to file.&quot;);</span>
+<span class="fc" id="L43">    }</span>
+<span class="fc" id="L44">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

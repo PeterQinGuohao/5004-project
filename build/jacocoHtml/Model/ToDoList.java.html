@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ToDoList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW9</a> &gt; <a href="index.source.html" class="el_package">Model</a> &gt; <span class="el_source">ToDoList.java</span></div><h1>ToDoList.java</h1><pre class="source lang-java linenums">package Model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * This class is the collections of all todos
+ */
+public class ToDoList implements IToDoList{
+    // to do list included full list or filtered list
+    private List&lt;ToDo&gt; toDoList;
+    private List&lt;ToDo&gt; filteredList;
+    private List&lt;ToDo&gt; filteredByComplete;
+    private List&lt;ToDo&gt; filteredByCategory;
+    public static final String SHOW_INCOMPLETE = &quot;--show-incomplete&quot;;
+    public static final String SHOW_CATEGORY = &quot;--show-category&quot;;
+<span class="fc" id="L18">    private static final Integer ID_OFFSET = 1;</span>
+<span class="fc" id="L19">    public static final Integer TWO = 2;</span>
+
+    /**
+     * Constructor for ToDoList class.
+     */
+<span class="fc" id="L24">    public ToDoList() {</span>
+<span class="fc" id="L25">        this.toDoList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L26">        this.filteredList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">        this.filteredByComplete = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L28">        this.filteredByCategory = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * This function will add a new ToDo.
+     * @param toDo - new ToDo to be added.
+     */
+    public void addToDo(ToDo toDo) {
+<span class="fc" id="L36">        this.toDoList.add(toDo);</span>
+<span class="fc" id="L37">        toDo.setId(this.getId(toDo));</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * Get the id of a specific ToDo.
+     * @param todo - the ToDo that needs to be found.
+     * @return an integer, representing ID of the ToDo.
+     */
+    public Integer getId(ToDo todo) {
+        // because the id starts from 0, 1 need to be added as offset
+<span class="fc" id="L47">        return this.toDoList.indexOf(todo) + ID_OFFSET;</span>
+    }
+
+    /**
+     * Get a List of ToDos.
+     * @return a List of ToDos.
+     */
+    public List&lt;ToDo&gt; getToDoList() {
+<span class="fc" id="L55">        return this.toDoList;</span>
+    }
+
+    /**
+     * This function will filter a list of todos by different conditions.
+     * @param condition - filter conditions.
+     * @param category - filter category.
+     * @return a new list.
+     */
+    public List&lt;ToDo&gt; filter(String condition, String category) {
+        // two filters can be combined if both of them are met
+<span class="pc bpc" id="L66" title="2 of 4 branches missed.">        if (condition.contains(SHOW_INCOMPLETE.substring(TWO)) &amp;&amp; !condition.contains(SHOW_CATEGORY.substring(TWO))){</span>
+<span class="fc" id="L67">            return this.filterByIncomplete();</span>
+        }
+<span class="nc bnc" id="L69" title="All 4 branches missed.">        if (!condition.contains(SHOW_INCOMPLETE.substring(TWO)) &amp;&amp; condition.contains(SHOW_CATEGORY.substring(TWO))) {</span>
+<span class="nc" id="L70">            return this.filterByCategory(category);</span>
+        }
+<span class="nc bnc" id="L72" title="All 4 branches missed.">        if (condition.contains(SHOW_INCOMPLETE.substring(TWO)) &amp;&amp; condition.contains(SHOW_CATEGORY.substring(TWO))) {</span>
+<span class="nc" id="L73">            this.filteredByComplete = this.filterByIncomplete();</span>
+<span class="nc" id="L74">            this.filteredByCategory = this.filterByCategory(category);</span>
+<span class="nc" id="L75">            int size = this.filteredByComplete.size();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            for  (int i = 0; i &lt; size; i ++){</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                if (this.filteredByCategory.contains(this.filteredByComplete.get(i))){</span>
+<span class="nc" id="L78">                    this.filteredList.add(this.filteredByComplete.get(i));</span>
+                }
+            }
+        }
+<span class="nc" id="L82">        return this.filteredList;</span>
+    }
+
+    /**
+     * This function will filter the list to only include incomplete Todos.
+     * @return a new list of todos.
+     */
+    private List&lt;ToDo&gt; filterByIncomplete() {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (ToDo toDo: this.toDoList) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            if (!toDo.isCompleted()) {</span>
+<span class="fc" id="L92">                this.filteredList.add(toDo);</span>
+            }
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">        return this.filteredList;</span>
+    }
+
+    /**
+     * This function will filter the list to only include Todos with a particular category.
+     * @param category - the category for filter.
+     * @return a new list of todos.
+     */
+    private List&lt;ToDo&gt; filterByCategory(String category) {
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        for (ToDo toDo: this.toDoList) {</span>
+<span class="nc bnc" id="L105" title="All 4 branches missed.">            if (toDo.getCategory()!= null &amp;&amp; toDo.getCategory().equals(category)) {</span>
+<span class="nc" id="L106">                this.filteredList.add(toDo);</span>
+            }
+<span class="nc" id="L108">        }</span>
+<span class="nc" id="L109">        return this.filteredList;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L115">            return true;</span>
+        }
+<span class="nc bnc" id="L117" title="All 4 branches missed.">        if (o == null || this.getClass() != o.getClass()) {</span>
+<span class="nc" id="L118">            return false;</span>
+        }
+<span class="nc" id="L120">        ToDoList toDoList1 = (ToDoList) o;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        return Objects.equals(getToDoList(), toDoList1.getToDoList()) &amp;&amp; Objects</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">                .equals(this.filteredList, toDoList1.filteredList);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L127">        return Objects.hash(getToDoList(), this.filteredList);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L132">        return &quot;ToDoList{&quot; +</span>
+                &quot;toDoList=&quot; + this.toDoList +
+                &quot;, partialList=&quot; + this.filteredList +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

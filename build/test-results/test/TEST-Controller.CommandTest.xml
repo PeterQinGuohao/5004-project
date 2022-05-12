@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Controller.CommandTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2022-05-12T00:55:46" hostname="LAPTOP-R76N3JQM" time="0.039">
+  <properties/>
+  <testcase name="getCommand_map()" classname="Controller.CommandTest" time="0.02"/>
+  <testcase name="getCommand_set()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="check2()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="check3()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="check4()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="check5()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="check6()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="check7()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="check8()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="check9()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="testToDo()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="testToString()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="check()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="generator()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="generator2()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="generator3()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="generator4()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="generator5()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="generator6()" classname="Controller.CommandTest" time="0.001"/>
+  <testcase name="testHashCode()" classname="Controller.CommandTest" time="0.0"/>
+  <testcase name="testEquals()" classname="Controller.CommandTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Controller.TodoFunctionalityTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-05-12T00:55:46" hostname="LAPTOP-R76N3JQM" time="0.021">
+  <properties/>
+  <testcase name="testToString()" classname="Controller.TodoFunctionalityTest" time="0.011"/>
+  <testcase name="systemFunction()" classname="Controller.TodoFunctionalityTest" time="0.004"/>
+  <testcase name="testHashCode()" classname="Controller.TodoFunctionalityTest" time="0.003"/>
+  <testcase name="testEquals()" classname="Controller.TodoFunctionalityTest" time="0.002"/>
+  <system-out><![CDATA[[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+ToDo{id=1, text='5004', completed=true, due=2022-01-01, priority=1, category='neu'}
+ToDo{id=2, text='null', completed=false, due=2020-01-01, priority=1, category='neu'}
+ToDo{id=2, text='null', completed=false, due=2020-01-01, priority=1, category='neu'}
+ToDo{id=1, text='5004', completed=true, due=2022-01-01, priority=1, category='neu'}
+ToDo{id=2, text='null', completed=false, due=2020-01-01, priority=1, category='neu'}
+ToDo{id=2, text='null', completed=false, due=2020-01-01, priority=1, category='neu'}
+ToDo{id=1, text='5004', completed=true, due=2022-01-01, priority=1, category='neu'}
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+[1, Finish HW9, false, ?, 1, school]
+[2, Study for finals, false, ?, 2, school]
+[3, Clean the house, false, ?, 3, home]
+[4, Mail passport, true, ?, ?, ?]
+[5, Buy yarn for blanket, stuffed toy, true, ?, ?, home]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TodoFunctionality.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW9</a> &gt; <a href="index.source.html" class="el_package">Controller</a> &gt; <span class="el_source">TodoFunctionality.java</span></div><h1>TodoFunctionality.java</h1><pre class="source lang-java linenums">package Controller;
+
+import java.util.*;
+import Model.*;
+
+public class TodoFunctionality {
+  public static final String ADD_TODO = &quot;--add-todo&quot;;
+  public static final String COMPLETE_TODO = &quot;--complete-todo&quot;;
+  public static final String DISPLAY = &quot;--display&quot;;
+  public static final String SHOW_INCOMPLETE = &quot;--show-incomplete&quot;;
+  public static final String SHOW_CATEGORY = &quot;--show-category&quot;;
+  public static final String SORT_BY_DATE = &quot;--sort-by-date&quot;;
+  public static final String SORT_BY_PRIORITY = &quot;--sort-by-priority&quot;;
+
+  private Command commandProcessor;
+  private ToDoList toDoList;
+
+  /**
+   * Construct a new TodoFunctionality object with specified commandProcessor and toDoList
+   * @param commandProcessor
+   * @param toDoList
+   */
+<span class="fc" id="L23">  public TodoFunctionality(Command commandProcessor, ToDoList toDoList) {</span>
+<span class="fc" id="L24">    this.commandProcessor = commandProcessor;</span>
+<span class="fc" id="L25">    this.toDoList = toDoList;</span>
+<span class="fc" id="L26">  }</span>
+
+  /**
+   * The system must support the following functionality:
+   * - Add a new todo
+   * - Complete an existing todo
+   * - Display todos
+   */
+  public void SystemFunction() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">    if (this.containAddCommand()) {</span>
+<span class="fc" id="L36">      ToDo newTodo = new ToDo.Builder(this.getAddText()).Build();</span>
+<span class="fc" id="L37">      this.toDoList.addToDo(newTodo);</span>
+    }
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">    if (this.containCompleteCommand()) {</span>
+<span class="nc" id="L40">      int id = Integer.parseInt(this.commandProcessor.getCommand_map().get(COMPLETE_TODO));</span>
+<span class="nc" id="L41">      this.completeItem(id);</span>
+    }
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    if (this.containDisplayCommand()) {</span>
+<span class="fc" id="L44">      this.display();</span>
+    }
+<span class="fc" id="L46">  }</span>
+
+  /**
+   * Mark the Todo with the provided ID as complete.
+   */
+  public void completeItem(int id) {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">    for (ToDo todo : this.toDoList.getToDoList()) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">      if (id == todo.getID()) {</span>
+<span class="fc" id="L54">        todo.setCompleted();</span>
+      }
+<span class="fc" id="L56">    }</span>
+<span class="fc" id="L57">  }</span>
+
+  /**
+   * Create a new ToDo
+   * @return a Map that contains information
+   */
+  public Map&lt;String, String&gt; getAddText() {
+<span class="fc" id="L64">    List&lt;String&gt; newToDo = Arrays.asList(&quot;text&quot;, &quot;completed&quot;, &quot;due&quot;, &quot;priority&quot;, &quot;category&quot;);</span>
+<span class="fc" id="L65">    Map&lt;String, String&gt; newMap = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    for (String str : this.commandProcessor.getCommand_map().keySet()) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">      if (newToDo.contains(str)) {</span>
+<span class="fc" id="L68">        newMap.put(str, this.commandProcessor.getCommand_map().get(str));</span>
+      }
+<span class="fc" id="L70">    }</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">    if (this.commandProcessor.getCommand_set().contains(&quot;completed&quot;)) {</span>
+<span class="nc" id="L72">      newMap.put(&quot;completed&quot;, null);</span>
+    }
+<span class="fc" id="L74">    return newMap;</span>
+  }
+
+  /**
+   * Display todos.
+   */
+  public void display() {
+<span class="fc" id="L81">    List&lt;ToDo&gt; displayList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L82">    displayList = this.toDoList.getToDoList();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">    if (this.displayIncomplete()) {</span>
+<span class="fc" id="L84">      displayList = this.toDoList.filter(SHOW_INCOMPLETE, null);</span>
+    }
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">    else if (this.displayCategory()) {</span>
+<span class="nc" id="L87">      displayList = this.toDoList.filter(SHOW_CATEGORY, this.commandProcessor.getCommand_map().get(SHOW_CATEGORY));</span>
+    }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">    else if (this.displayDate()) {</span>
+<span class="fc" id="L90">      Collections.sort(displayList, Comparator.nullsLast(</span>
+<span class="fc" id="L91">          Comparator.comparing(</span>
+<span class="fc" id="L92">              ToDo::getDue, Comparator.nullsLast(Comparator.naturalOrder())</span>
+          )
+      ));
+    }
+<span class="fc bfc" id="L96" title="All 2 branches covered.">    else if (this.displayPriority()) {</span>
+<span class="fc" id="L97">      Collections.sort(displayList, Comparator.nullsLast(</span>
+<span class="fc" id="L98">          Comparator.comparing(</span>
+<span class="fc" id="L99">              ToDo::getPriority, Comparator.nullsLast(Comparator.naturalOrder())</span>
+          )
+      ));
+    }
+    else {
+<span class="fc" id="L104">      displayList = this.toDoList.getToDoList();</span>
+    }
+<span class="fc bfc" id="L106" title="All 2 branches covered.">    for (ToDo todo : displayList) {</span>
+<span class="fc" id="L107">      System.out.println(todo);</span>
+<span class="fc" id="L108">    }</span>
+<span class="fc" id="L109">  }</span>
+
+  /**
+   * Check if the command contains Incomplete
+   * @return true if contained, otherwise return false
+   */
+  public boolean displayIncomplete() {
+<span class="fc" id="L116">    return this.commandProcessor.getCommand_set().contains(SHOW_INCOMPLETE);</span>
+  }
+
+  /**
+   * Check if the command contains Category
+   * @return true if contained, otherwise return false
+   */
+  public boolean displayCategory() {
+<span class="fc" id="L124">    return this.commandProcessor.getCommand_map().containsKey(SHOW_CATEGORY);</span>
+  }
+
+  /**
+   * Check if the command contains Sort By Date
+   * @return true if contained, otherwise return false
+   */
+  public boolean displayDate() {
+<span class="fc" id="L132">    return this.commandProcessor.getCommand_set().contains(SORT_BY_DATE);</span>
+  }
+
+  /**
+   * Check if the command contains Sort By Priority
+   * @return true if contained, otherwise return false
+   */
+  public boolean displayPriority() {
+<span class="fc" id="L140">    return this.commandProcessor.getCommand_set().contains(SORT_BY_PRIORITY);</span>
+  }
+
+  /**
+   * Check if the command contains Add
+   * @return true if contained, otherwise return false
+   */
+  public boolean containAddCommand() {
+<span class="fc" id="L148">    return this.commandProcessor.getCommand_set().contains(ADD_TODO);</span>
+  }
+
+  /**
+   * Check if the command contains Complete
+   * @return true if contained, otherwise return false
+   */
+  public boolean containCompleteCommand() {
+<span class="fc" id="L156">    return this.commandProcessor.getCommand_map().containsKey(COMPLETE_TODO);</span>
+  }
+
+  /**
+   * Check if the command contains Display
+   * @return true if contained, otherwise return false
+   */
+  public boolean containDisplayCommand() {
+<span class="fc" id="L164">    return this.commandProcessor.getCommand_set().contains(DISPLAY);</span>
+  }
+
+  /**
+   * check whether two objects are same
+   * @param o object to be compared
+   * @return true if same, otherwise return false
+   */
+  @Override
+  public boolean equals(Object o) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">    if (this == o) {</span>
+<span class="fc" id="L175">      return true;</span>
+    }
+<span class="pc bpc" id="L177" title="1 of 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="fc" id="L178">      return false;</span>
+    }
+<span class="nc" id="L180">    TodoFunctionality that = (TodoFunctionality) o;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">    return Objects.equals(commandProcessor, that.commandProcessor)</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        &amp;&amp; Objects.equals(toDoList, that.toDoList);</span>
+  }
+
+  /**
+   * return hashcode of the object
+   * @return hashcode of the object
+   */
+  @Override
+  public int hashCode() {
+<span class="fc" id="L191">    return Objects.hash(commandProcessor, toDoList);</span>
+  }
+
+  /**
+   * return a string that represents the object
+   * @return a string
+   */
+  @Override
+  public String toString() {
+<span class="fc" id="L200">    return &quot;TodoFunctionality{&quot; +</span>
+        &quot;commandProcessor=&quot; + commandProcessor +
+        &quot;, toDoList=&quot; + toDoList +
+        '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

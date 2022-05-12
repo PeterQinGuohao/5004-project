@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Command.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HW9</a> &gt; <a href="index.source.html" class="el_package">Controller</a> &gt; <span class="el_source">Command.java</span></div><h1>Command.java</h1><pre class="source lang-java linenums">package Controller;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
+
+/**
+ * This class Command stores and determines the command line arguments.
+ */
+public class Command {
+    public static final String CSV_FILE = &quot;--csv-file&quot;;
+    public static final String ADD_TODO = &quot;--add-todo&quot;;
+    public static final String TODO_TEXT = &quot;--todo-text&quot;;
+    public static final String COMPLETED = &quot;--completed&quot;;
+    public static final String DUE = &quot;--due&quot;;
+    public static final String PRIORITY = &quot;--priority&quot;;
+    public static final String CATEGORY = &quot;--category&quot;;
+    public static final String COMPLETE_TODO = &quot;--complete-todo&quot;;
+    public static final String DISPLAY = &quot;--display&quot;;
+    public static final String SHOW_INCOMPLETE = &quot;--show-incomplete&quot;;
+    public static final String SHOW_CATEGORY = &quot;--show-category&quot;;
+    public static final String SORT_BY_DATE = &quot;--sort-by-date&quot;;
+    public static final String SORT_BY_PRIORITY = &quot;--sort-by-priority&quot;;
+<span class="fc" id="L24">    public static final Integer TWO = 2;</span>
+    private HashSet&lt;String&gt; command_set;
+    private HashMap&lt;String, String&gt; command_map;
+
+    /**
+     * The constructor of the class
+     * @param args the input arguments
+     * @throws InvalidCommandsException if the command are not valid.
+     */
+<span class="fc" id="L33">    public Command(String[] args) throws InvalidCommandsException {</span>
+<span class="fc" id="L34">        command_set = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L35">        command_map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L36">        this.generator(args);</span>
+<span class="fc" id="L37">        this.check();</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * The getter of the command set
+     * @return the command set
+     */
+    public HashSet&lt;String&gt; getCommand_set() {
+<span class="fc" id="L45">        return command_set;</span>
+    }
+
+    /**
+     * The getter of the command map
+     * @return the command map
+     */
+    public HashMap&lt;String, String&gt; getCommand_map() {
+<span class="fc" id="L53">        return command_map;</span>
+    }
+
+    /**
+     * Determine it contains addTodo or not
+     * @return true if it contains addTodo, false otherwise
+     */
+    protected boolean ContainsAddToDo() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return (this.command_set.contains(COMPLETED) ||</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                this.command_map.containsKey(PRIORITY.substring(TWO)) ||</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                this.command_map.containsKey(CATEGORY.substring(TWO)));</span>
+    }
+
+    /**
+     * Determine it contains display or not
+     * @return true if it contains display, false otherwise
+     */
+    protected boolean ContainsDisplay() {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        return (this.command_map.containsKey(SHOW_CATEGORY) ||</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                this.command_set.contains(SHOW_INCOMPLETE) ||</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                this.command_set.contains(SORT_BY_DATE) ||</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                this.command_set.contains(SORT_BY_PRIORITY));</span>
+    }
+
+    /**
+     * The generator of the class
+     * @param args the input arguments
+     * @throws InvalidCommandsException if the commands are not valid
+     */
+    public void generator(String[] args) throws InvalidCommandsException {
+
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (int i = 0; i &lt; args.length; i++) {</span>
+<span class="fc bfc" id="L85" title="All 7 branches covered.">            switch (args[i]) {</span>
+                case CSV_FILE:
+<span class="fc" id="L87">                    String lastFourDigits = args[i + 1].substring(args[i + 1].length() - 4);</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">                    if (args[i + 1].contains(&quot;--&quot;) || !lastFourDigits.equals(&quot;.csv&quot;)) {</span>
+<span class="fc" id="L89">                        throw new InvalidCommandsException(args[i] + &quot; is not a valid csv file.&quot;);</span>
+                    } else
+<span class="fc" id="L91">                        this.command_map.put(CSV_FILE, args[++i]);</span>
+<span class="fc" id="L92">                    break;</span>
+
+                case COMPLETED:
+                case ADD_TODO:
+                case DISPLAY:
+                case SHOW_INCOMPLETE:
+<span class="fc" id="L98">                    this.command_set.add(args[i]);</span>
+<span class="fc" id="L99">                    break;</span>
+
+                case TODO_TEXT:
+                case DUE:
+                case COMPLETE_TODO:
+                case CATEGORY:
+                case SHOW_CATEGORY:
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                    if (args[i + 1].contains(&quot;--&quot;)) {</span>
+<span class="fc" id="L107">                        throw new InvalidCommandsException(</span>
+                                &quot;The value after &quot; + args[i] + &quot; is invalid.&quot;);
+                    } else
+<span class="fc" id="L110">                        command_map.put(args[i].substring(TWO), args[++i]);</span>
+<span class="fc" id="L111">                    break;</span>
+                case PRIORITY:
+<span class="pc bpc" id="L113" title="1 of 6 branches missed.">                    if (args[i + 1].contains(&quot;1&quot;) || args[i + 1].contains(&quot;2&quot;) || args[i + 1].contains(&quot;3&quot;)) {</span>
+<span class="fc" id="L114">                        command_map.put(args[i].substring(TWO), args[++i]);</span>
+                    } else
+<span class="fc" id="L116">                        throw new InvalidCommandsException(</span>
+                                &quot;The value of &quot; + args[i] + &quot; is invalid.&quot;);
+                    break;
+                case SORT_BY_DATE:
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                    if (this.command_set.contains(SORT_BY_PRIORITY)) {</span>
+<span class="fc" id="L121">                        throw new InvalidCommandsException(args[i] + &quot; is not valid with --sort-by-priority.&quot;);</span>
+                    } else
+<span class="fc" id="L123">                        this.command_set.add(args[i]);</span>
+<span class="fc" id="L124">                    break;</span>
+
+                case SORT_BY_PRIORITY:
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                    if (this.command_set.contains(SORT_BY_DATE)) {</span>
+<span class="fc" id="L128">                        throw new InvalidCommandsException(args[i] + &quot; is not valid with --sort-by-date.&quot;);</span>
+                    } else
+<span class="fc" id="L130">                        this.command_set.add(args[i]);</span>
+<span class="fc" id="L131">                    break;</span>
+
+                default:
+<span class="fc" id="L134">                    throw new InvalidCommandsException(args[i]+ &quot; is invalid.&quot;);</span>
+            }
+        }
+<span class="fc" id="L137">    }</span>
+
+    /**
+     * The checker of the class
+     * @throws InvalidCommandsException if the commands are not valid
+     */
+    public void check() throws InvalidCommandsException {
+
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (!this.command_map.containsKey(CSV_FILE)) {</span>
+<span class="fc" id="L146">            throw new InvalidCommandsException(&quot;It should contain csv file&quot;);</span>
+        }
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (this.command_set.contains(ADD_TODO)) {</span>
+<span class="fc" id="L150">            boolean foundTodoText = this.command_map.containsKey(TODO_TEXT.substring(TWO));</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            if (!foundTodoText) {</span>
+<span class="fc" id="L152">                throw new InvalidCommandsException(&quot;It should contain --todo-text&quot;);</span>
+            }
+        }
+
+
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (this.ContainsAddToDo()) {</span>
+<span class="fc" id="L158">            boolean foundAddTodo = this.command_set.contains(ADD_TODO);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if (!foundAddTodo) {</span>
+<span class="fc" id="L160">                throw new InvalidCommandsException(&quot;It should contain --add-todo option&quot;);</span>
+            }
+        }
+
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (this.ContainsDisplay()) {</span>
+<span class="fc" id="L165">            boolean foundDisplay = this.command_set.contains(DISPLAY);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">            if (!foundDisplay) {</span>
+<span class="fc" id="L167">                throw new InvalidCommandsException(&quot;It should contain --display option&quot;);</span>
+            }
+        }
+<span class="fc" id="L170">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L176">        Command command = (Command) o;</span>
+<span class="pc bpc" id="L177" title="2 of 4 branches missed.">        return Objects.equals(command_set, command.command_set) &amp;&amp; Objects.equals(command_map, command.command_map);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L182">        return Objects.hash(command_set, command_map);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L187">        return &quot;Command{&quot; +</span>
+                &quot;command_set=&quot; + command_set +
+                &quot;, command_map=&quot; + command_map +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
